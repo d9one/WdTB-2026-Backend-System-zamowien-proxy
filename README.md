@@ -19,7 +19,7 @@ Te same strony znajdują się w katalogu [`docs/`](docs/index.html); po sklonowa
 
 - Zespół 3 osoby, jedno repozytorium: **fork** tego szablonu przemianowany na **`WdTB-2026-Backend-<nazwaprojektu>`**.
 - Każdy zespół buduje backend własnego projektu: encje i relacje, repozytoria i zapytania, serwisy, REST API.
-- **LAB 02 zaczyna się od prezentacji:** zespół uruchamia aplikację i pokazuje na http://localhost:8080 wypełnioną wizytówkę
+- **Prezentacja na LAB 02, przy stanowisku:** zespół uruchamia aplikację i pokazuje prowadzącemu na http://localhost:8080 wypełnioną wizytówkę
   projektu (`src/main/resources/static/index.html`, bez `[uzupełnij]`). Wizytówkę wypełniacie na LAB 01.
 - Wymagania każdego laboratorium sprawdzają automatyczne testy (reguły projektu) w GitHub Actions. Tag `lab-N` uruchamia reguły laboratorium N.
 
