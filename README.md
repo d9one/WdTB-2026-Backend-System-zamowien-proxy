@@ -10,7 +10,8 @@ Materiały przygotował: **Wojciech Koszela**, prowadzący
 
 **Dokumentacja: [wkoszela.github.io/WdTB-2026-Backend--projectname--](https://wkoszela.github.io/WdTB-2026-Backend--projectname--/)**
 (instrukcje: [LAB 01](https://wkoszela.github.io/WdTB-2026-Backend--projectname--/lab01.html),
-[LAB 02](https://wkoszela.github.io/WdTB-2026-Backend--projectname--/lab02.html)).
+[LAB 02](https://wkoszela.github.io/WdTB-2026-Backend--projectname--/lab02.html),
+[LAB 03](https://wkoszela.github.io/WdTB-2026-Backend--projectname--/lab03.html)).
 Są tam instrukcje do zajęć, wymagania, zasady zaliczenia i opis reguł projektu.
 **Arkusz zespołów (Excel): [otwórz w SharePoint](https://m365ht-my.sharepoint.com/:x:/g/personal/wojciech_koszela_wroclaw_merito_pl/IQCEEPWN_2owS6zMeDfSfeG-AXpOGAC7AgOlj9SAudd8Y0w?e=S2s4H9)**, zakładka Waszej grupy.
 Te same strony znajdują się w katalogu [`docs/`](docs/index.html); po sklonowaniu repozytorium można je otworzyć lokalnie w przeglądarce.
@@ -27,8 +28,8 @@ Te same strony znajdują się w katalogu [`docs/`](docs/index.html); po sklonowa
 |---|---|
 | LAB 01 | Start: projekt, aplikacja i opis pomysłu (bez oceny) |
 | LAB 02 | Encje JPA i dane startowe (ocena z pokazanego przebiegu w GitHub Actions) |
-| LAB 03 | Repozytoria i zapytania |
-| LAB 04 | Serwisy i komponenty |
+| LAB 03 | Relacje między tabelami (ocena z przebiegu i pytań kontrolnych przy stanowisku) |
+| LAB 04 | Zapytania, serwisy i komponenty |
 | LAB 05 | Kontrolery REST |
 | LAB 06 | Rozbudowa: zdarzenia, konfiguracja, zadania cykliczne |
 | LAB 07 | Odrabianie |
@@ -131,6 +132,23 @@ Instrukcja krok po kroku: `docs/lab02.html`. Zespół pracuje razem **na jednym 
 Na koniec zajęć zespół pokazuje prowadzącemu przebieg „Testy i reguły” w zakładce *Actions* dla ostatniego commita na `main`.
 Przebieg można uruchomić ręcznie: *Actions* → *Testy i reguły* → *Run workflow* → numer laboratorium `2`.
 Opcjonalnie zespół tworzy tag `lab-2` (okno *Git* → *Log* → prawy przycisk na commicie → *New Tag…*, potem *Git → Push* z *Push Tags*).
+
+## Co zmodyfikować na LAB 03
+
+Instrukcja krok po kroku: `docs/lab03.html`. Zespół pracuje razem **na jednym laptopie**; w trakcie pracy każda osoba
+odpowiada przy stanowisku na jedno pytanie kontrolne z listy w instrukcji (część A).
+
+| Plik | Zmiana | Reguła |
+|---|---|---|
+| `pom.xml`, `<lab>` | `2` → `3` (od razu commit i push) | włącza R3.xx |
+| encje w `pl.wsb.<projekt>.<moduł>.entity` | co najmniej 2 pola `@ManyToOne` z `@JoinColumn(name = "…_id")`; jedno z nich typu `UserAccount` | R3.01–R3.02 |
+| strona odwrotna (opcjonalnie) | `@OneToMany(mappedBy = "…")` w encji nadrzędnej | R3.03 |
+| `src/main/resources/data.sql` | kolumny kluczy obcych w `insert`, sekcje tabel nadrzędnych przed podrzędnymi; komentarz z przewidywanym DDL i dwa pytania inwestora jako `select … join` | R3.04 |
+| na ocenę 5 | encja łącząca wiele-do-wielu, `fetch = FetchType.LAZY` na każdej relacji, interfejs `JpaRepository` w `<moduł>.repository` z metodą np. `findByGuest_FullName` i test `@SpringBootTest` | R3.05–R3.07 |
+| `src/main/resources/static/index.html` | w liście zmian: co powstało na LAB 03 | — |
+
+Na koniec zajęć zespół pokazuje prowadzącemu przebieg „Testy i reguły” dla ostatniego commita na `main`
+(ręcznie: *Run workflow* → numer laboratorium `3`; opcjonalnie tag `lab-3`).
 
 ## Konwencja nazw
 

@@ -14,7 +14,7 @@
 <div class="wrap">
 <div class="top">
   <a class="logo" href="index.html"><img src="assets/merito-logo.png" alt="Uniwersytet WSB Merito Wrocław"></a>
-  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html">LAB 01</a><a href="lab02.html">LAB 02</a><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
+  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html">LAB 01</a><a href="lab02.html">LAB 02</a><a href="lab03.html">LAB 03</a><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
 </div>
 <main class="doc"><article class="md">
 <h1>Dla prowadzącego: konfiguracja GitHub</h1>
@@ -72,6 +72,26 @@ mvn verify -Dlab=N
 <tr><td>1:20–1:30</td><td>pokazanie przebiegu w GitHub Actions przy stanowisku; pozostałe zespoły po zajęciach z ostatniego przebiegu</td></tr>
 </tbody>
 </table></div>
+<h2>Przebieg LAB 03 (90 minut, ok. 10 zespołów)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Czas</th>
+<th>Co</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0:00–0:12</td><td>teoria: B1 i B3 (klucz obcy po stronie „wiele”, przykład kawiarni z relacjami); B2 i B4 zespoły czytają w trakcie pracy</td></tr>
+<tr><td>0:12–0:17</td><td>Sync fork, <code>&lt;lab&gt;3&lt;/lab&gt;</code>, omówienie listy pytań kontrolnych (część A)</td></tr>
+<tr><td>0:17–1:20</td><td>praca zespołów (części D–G)</td></tr>
+<tr><td>0:40–1:15</td><td>obchód zespołów: pytania kontrolne przy stanowisku, każda osoba losuje jedno pytanie z listy w części A, ok. 3 minuty na zespół</td></tr>
+<tr><td>1:20–1:30</td><td>pokazanie przebiegu w GitHub Actions przy stanowisku; pozostałe zespoły po zajęciach z ostatniego przebiegu</td></tr>
+</tbody>
+</table></div>
+<p>Pytania kontrolne odpowiadają na obserwację z LAB 02: część zespołów pracuje z asystentami AI i ma poprawny kod bez zrozumienia,
+część bez AI i z trudem. Lista jest jawna, więc oba rodzaje zespołów mogą się przygotować; odpowiedź trzeba pokazać na własnym projekcie
+(kod, log, konsola H2). Osoba bez odpowiedzi dostaje ocenę o stopień niższą niż zespół. Pytanie 7 (encja łącząca zamiast <code>@ManyToMany</code>)
+losują tylko zespoły, które robią część G.</p>
 <h2>Ocena laboratorium (na koniec zajęć, ok. 5 min na zespół)</h2>
 <ol>
 <li>Zespół pokazuje przebieg <em>Testy i reguły</em> dla ostatniego commita na <code>main</code> (albo uruchomiony ręcznie <em>Run workflow</em> z numerem laboratorium, albo dla opcjonalnego tagu <code>lab-N</code>): zielony etap „Ocena 4” to warunek konieczny, zielony etap „Ocena 5” to warunek oceny 5.</li>
