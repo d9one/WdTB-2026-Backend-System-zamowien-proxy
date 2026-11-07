@@ -14,7 +14,7 @@
 <div class="wrap">
 <div class="top">
   <a class="logo" href="index.html"><img src="assets/merito-logo.png" alt="Uniwersytet WSB Merito Wrocław"></a>
-  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html">LAB 01</a><span class="disabled" aria-disabled="true" title="Instrukcja pojawi się przed zajęciami">LAB 02</span><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html" aria-current="page">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
+  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html">LAB 01</a><a href="lab02.html">LAB 02</a><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html" aria-current="page">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
 </div>
 <main class="doc"><article class="md">
 <h1>Reguły projektu</h1>
@@ -45,12 +45,17 @@ więc ten sam zestaw ocenia wszystkie zespoły.</p>
 <td>pliki + Spring Boot</td>
 <td>tożsamość projektu, wizytówka, aplikacja startuje, konta zespołu</td>
 </tr>
+<tr>
+<td>02</td>
+<td>ArchUnit + Spring Boot</td>
+<td>encje i ich pakiety, relacje (<code>@ManyToOne</code>, N:M, <code>mappedBy</code>), typy kolumn, dane startowe w każdej tabeli</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Konwencja pakietów</h2>
 <pre><code>pl.wsb.&lt;projekt&gt;                          klasa @SpringBootApplication (dokładnie jedna)
 pl.wsb.&lt;projekt&gt;.account.domain           gotowe konto użytkownika (user_account)
-pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.domain           @Entity, @Embeddable, enumy, *Repository
+pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.entity           @Entity, @Embeddable, enumy
 pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.application      @Service, przypadki użycia, @Transactional
 pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.api              publiczny kontrakt: fasady, rekordy, zdarzenia
 pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.web              @RestController, *Request / *Response
@@ -88,11 +93,54 @@ pl.wsb.&lt;projekt&gt;.shared | common | config moduły wspólne, dostępne dla 
 </tr>
 </tbody>
 </table></div>
+<h2>LAB 02 · Encje i dane startowe</h2>
+<p>Instrukcja: <a href="lab02.html">LAB 02</a>. „Własne encje” to wszystkie klasy z <code>@Entity</code> poza gotowym <code>UserAccount</code>.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Reguła</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R2.01</td>
+<td>Co najmniej 3 własne encje (<code>@Entity</code>)</td>
+</tr>
+<tr>
+<td>R2.02</td>
+<td>Encje i <code>@Embeddable</code> leżą w pakietach <code>pl.wsb.&lt;projekt&gt;.&lt;moduł&gt;.entity</code> (gotowe <code>UserAccount</code> zostaje w <code>account.domain</code>)</td>
+</tr>
+<tr>
+<td>R2.03</td>
+<td>Aplikacja startuje na czystej bazie H2, a każda własna tabela ma co najmniej 3 wiersze z <code>data.sql</code></td>
+</tr>
+<tr>
+<td>R2.04</td>
+<td>Każda własna tabela ma co najmniej 4 kolumny poza <code>id</code> (kolumny klasy <code>@Embedded</code> się liczą)</td>
+</tr>
+<tr>
+<td>R2.05</td>
+<td>Każda własna tabela ma co najmniej jedną kolumnę wymaganą (<code>nullable = false</code>)</td>
+</tr>
+<tr>
+<td>R2.06</td>
+<td><strong>Ocena 5:</strong> co najmniej jedna własna tabela ma kolumnę typu enum, a każde pole enum ma <code>@Enumerated(EnumType.STRING)</code></td>
+</tr>
+<tr>
+<td>R2.07</td>
+<td><strong>Ocena 5:</strong> co najmniej jedna własna tabela ma pole <code>@Embedded</code> typu klasy <code>@Embeddable</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>R2.01–R2.05 działają w etapie „Ocena 4”, R2.06–R2.07 w etapie „Ocena 5” (uruchamianym po zielonym etapie „Ocena 4”).
+R2.03 uruchamia aplikację, pozostałe czytają skompilowane klasy (ArchUnit). Autotest w
+<code>src/test/java/pl/wsb/rules/lab02</code> sprawdza je na przykładzie kawiarni i na celowo błędnym modelu.</p>
 <p>Reguły kolejnych laboratoriów pojawią się w szablonie przed danymi zajęciami.</p>
 </article></main>
 <footer>
   <span>Wprowadzenie do technologii backendowych · laboratoria</span>
-  <span class="author">Materiały przygotował: <b>Wojciech Koszela</b>, prowadzący<a class="social li" href="https://www.linkedin.com/in/wkoszela/" target="_blank" rel="noopener" aria-label="Wojciech Koszela na LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a><a class="social gh" href="https://github.com/wkoszela" target="_blank" rel="noopener" aria-label="wkoszela na GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a></span>
+  <span class="author">Materiały przygotował: <b>Wojciech Koszela</b>, prowadzący<a class="social li" href="https://www.linkedin.com/in/wkoszela/" target="_blank" rel="noopener" aria-label="Wojciech Koszela na LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a><a class="social gh" href="https://github.com/wkoszela" target="_blank" rel="noopener" aria-label="wkoszela na GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a><a class="social mail" href="mailto:wojciech.koszela@wroclaw.merito.pl" aria-label="E-mail do prowadzącego"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.2.5 7.8 6.1L19.8 6H4.2zM20 7.9l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9z"/></svg>wojciech.koszela@wroclaw.merito.pl</a></span>
   <span class="logo"><img src="assets/merito-logo.png" alt="Uniwersytet WSB Merito Wrocław"></span>
 </footer>
 </div>

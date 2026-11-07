@@ -14,7 +14,7 @@
 <div class="wrap">
 <div class="top">
   <a class="logo" href="index.html"><img src="assets/merito-logo.png" alt="Uniwersytet WSB Merito Wrocław"></a>
-  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html" aria-current="page">LAB 01</a><span class="disabled" aria-disabled="true" title="Instrukcja pojawi się przed zajęciami">LAB 02</span><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
+  <nav class="jump" aria-label="Dokumentacja"><a href="index.html">Start</a><a href="lab01.html" aria-current="page">LAB 01</a><a href="lab02.html">LAB 02</a><a href="wymagania.html">Wymagania</a><a href="zasady.html">Zasady</a><a href="reguly.html">Reguły</a><a href="pomysl.html">Pomysł</a><a href="zespol.html">Praca w zespole</a><a href="roadmapa.html">Roadmapa</a><button class="theme-toggle" type="button" aria-label="Przełącz motyw jasny lub ciemny">Motyw</button></nav>
 </div>
 <main class="doc"><article class="md">
 <h1>LAB 01 · Start: projekt, aplikacja i opis pomysłu</h1>
@@ -23,9 +23,16 @@
 i porządnie opisany pomysł na własny projekt. Od LAB 02 budujecie na tym fundamencie.</p>
 <p><strong>Pracujemy na zajęciach, nie w domu.</strong> Wszystko z tej instrukcji robicie w trakcie zajęć.</p>
 </blockquote>
+<blockquote>
+<p><strong>Od tego zaczynamy LAB 02.</strong> Na początku kolejnych zajęć każdy zespół uruchamia aplikację w IntelliJ
+i pokazuje stronę <strong>http://localhost:8080</strong> z <strong>wypełnioną wizytówką projektu</strong>: nazwa projektu,
+jedno zdanie o problemie, tabela (<em>Autorzy</em>, <em>Dla kogo</em>, <em>Najważniejsze funkcje</em>) i zmiany wprowadzone na LAB 01.
+Na stronie nie może zostać żaden znacznik <code>[uzupełnij]</code>. Wizytówkę wypełniacie w kroku C3, a wysyłacie na GitHuba w kroku C4.</p>
+</blockquote>
 <p>Materiały: <a href="index.html">strona główna dokumentacji</a> (czym jest backend, architektura warstwowa, plan 7 zajęć,
-wymagania, zasady zaliczenia). Cała dokumentacja jest w katalogu <code>docs/</code> repozytorium: otwórzcie <code>docs/index.html</code>
-w przeglądarce.</p>
+wymagania, zasady zaliczenia). Aktualna dokumentacja jest dostępna online:
+<a href="https://wkoszela.github.io/WdTB-2026-Backend--projectname--/" target="_blank" rel="noopener">wkoszela.github.io/WdTB-2026-Backend--projectname--</a>.
+Te same strony są w katalogu <code>docs/</code> repozytorium: po sklonowaniu otwórzcie <code>docs/index.html</code> w przeglądarce.</p>
 <h2>Plan zajęć</h2>
 <ol class="agenda">
 <li><strong>A · Powitanie i omówienie przedmiotu</strong></li>
@@ -51,7 +58,7 @@ w przeglądarce.</p>
 <p>Plan wszystkich zajęć: <a href="roadmapa.html">Roadmapa</a>.</p>
 <h2>B · Zespół i repozytorium</h2>
 <h3>B1. Arkusz zespołów</h3>
-<p>Zespół to <strong>3 osoby</strong>. Utwórzcie zespoły i wpiszcie je do <strong>arkusza zespołów</strong> (plik Excel, link podaje prowadzący):
+<p>Zespół to <strong>3 osoby</strong>. Utwórzcie zespoły i wpiszcie je do <a href="https://m365ht-my.sharepoint.com/:x:/g/personal/wojciech_koszela_wroclaw_merito_pl/IQCEEPWN_2owS6zMeDfSfeG-AXpOGAC7AgOlj9SAudd8Y0w?e=S2s4H9" target="_blank" rel="noopener"><strong>arkusza zespołów</strong></a> (plik Excel):
 jedna osoba otwiera zakładkę swojej grupy, wybiera wolny numer zespołu i wpisuje cały zespół (imię i nazwisko, numer indeksu,
 e-mail uczelniany). Nazwę projektu, link i krótki opis uzupełnicie w części C.</p>
 <h3>B2. Fork szablonu</h3>
@@ -64,9 +71,17 @@ e-mail uczelniany). Nazwę projektu, link i krótki opis uzupełnicie w części
 <li><strong>Zespół.</strong> <em>Settings → Collaborators → Add people</em>: dodajcie pozostałe osoby z zespołu, żeby mogły wysyłać zmiany.
    Zaproszone osoby akceptują zaproszenie (e-mail albo https://github.com/notifications). Prowadzącego nie dodajecie:
    repozytorium jest publiczne, wystarczy link w arkuszu.</li>
-<li><strong>Klon.</strong> Osoba hostująca w IntelliJ IDEA: <em>File → New → Project from Version Control</em> (na ekranie powitalnym: <em>Clone Repository</em>),
-   URL forka → <em>Clone</em> → <em>Trust Project</em>. IntelliJ rozpozna projekt Maven i pobierze zależności.
-   Brak JDK 21 lub nowszego: <em>File → Project Structure → SDK → Download JDK</em>. Pozostałe osoby klonują najpóźniej na LAB 02.</li>
+<li><strong>Klon.</strong> Osoba hostująca pobiera repozytorium w IntelliJ IDEA przez integrację z GitHubem:
+   <ol>
+   <li><em>File → New → Project from Version Control</em> (na ekranie powitalnym: <em>Clone Repository</em>).</li>
+   <li>Po lewej stronie okna wybierzcie <strong>GitHub</strong> → <em>Log In via GitHub…</em>. Otworzy się przeglądarka:
+      zalogujcie się na GitHubie i kliknijcie <em>Authorize</em>. Logowanie wykonuje się jednorazowo; później IntelliJ pamięta konto.</li>
+   <li>Na liście repozytoriów Waszego konta wybierzcie fork <code>WdTB-2026-Backend--projectname--</code>, sprawdźcie katalog
+      w polu <em>Directory</em> i kliknijcie <em>Clone</em> → <em>Trust Project</em>.</li>
+   </ol>
+   IntelliJ rozpozna projekt Maven i pobierze zależności. Zamiast logowania można też wybrać <em>Repository URL</em> i wkleić URL forka.
+   Brak JDK 21 lub nowszego: <em>File → Project Structure → SDK → Download JDK</em>. Pozostałe osoby klonują najpóźniej na LAB 02
+   w ten sam sposób (fork widzą na liście po zaakceptowaniu zaproszenia do zespołu).</li>
 </ol>
 <blockquote>
 <p><strong>Nowe materiały.</strong> Na początku kolejnych zajęć kliknijcie na stronie repozytorium <strong>Sync fork → Update branch</strong>,
@@ -135,7 +150,7 @@ do projektu. Na LAB 01 wystarczy, że zmiany zacommituje <strong>jedna osoba z z
    Po restarcie sprawdźcie w konsoli H2, że jesteście w tabeli <code>user_account</code>.</li>
 <li><strong>Wizytówka (R1.04):</strong> w <code>src/main/resources/static/index.html</code> zastąpcie wszystkie <code>[uzupełnij]</code>:
    nazwa, jedno zdanie o problemie, autorzy, persona, 3 najważniejsze funkcje i zmiany wprowadzone na LAB 01.</li>
-<li><strong>Arkusz zespołów:</strong> przy swoim zespole nazwa projektu, link do repozytorium i krótki opis (1–2 zdania).
+<li><strong><a href="https://m365ht-my.sharepoint.com/:x:/g/personal/wojciech_koszela_wroclaw_merito_pl/IQCEEPWN_2owS6zMeDfSfeG-AXpOGAC7AgOlj9SAudd8Y0w?e=S2s4H9" target="_blank" rel="noopener">Arkusz zespołów</a>:</strong> przy swoim zespole nazwa projektu, link do repozytorium i krótki opis (1–2 zdania).
    Osoba hostująca zaznacza „tak” w kolumnie <em>Host</em>.</li>
 </ol>
 <div class="tbl"><table>
@@ -188,8 +203,13 @@ Dlatego dane dopisane ręcznie w konsoli H2 znikają po restarcie, a dane z <cod
 <h3>C4. Wysłanie zmian</h3>
 <p>W IntelliJ: <em>Git → Commit</em>, potem <em>Push</em>.</p>
 <blockquote>
-<p><strong>Prezentacja na początku LAB 02.</strong> Kolejne zajęcia zaczynamy od prezentacji wizytówek, czyli stron startowych
-aplikacji na <strong>http://localhost:8080</strong>: autorzy, pomysł (problem, klient, najważniejsze funkcje) i zmiany wprowadzone na LAB 01.</p>
+<p><strong>Prezentacja na początku LAB 02.</strong> Kolejne zajęcia zaczynamy od prezentacji wizytówek. Przed prezentacją:</p>
+<ol>
+<li>w IntelliJ <em>Git → Pull</em>, żeby mieć wersję wysłaną na LAB 01,</li>
+<li>uruchomcie aplikację (zielona strzałka obok <code>main</code> w klasie <code>&lt;NazwaProjektu&gt;Application</code>),</li>
+<li>otwórzcie <strong>http://localhost:8080</strong>: na stronie jest wypełniona wizytówka, bez <code>[uzupełnij]</code>.</li>
+</ol>
+<p>Na jej podstawie przedstawiacie autorów, pomysł (problem, klient, najważniejsze funkcje) i zmiany wprowadzone na LAB 01.</p>
 </blockquote>
 <h3>Reguły LAB 01</h3>
 <div class="tbl"><table>
@@ -225,7 +245,7 @@ aplikacji na <strong>http://localhost:8080</strong>: autorzy, pomysł (problem, 
 </article></main>
 <footer>
   <span>Wprowadzenie do technologii backendowych · laboratoria</span>
-  <span class="author">Materiały przygotował: <b>Wojciech Koszela</b>, prowadzący<a class="social li" href="https://www.linkedin.com/in/wkoszela/" target="_blank" rel="noopener" aria-label="Wojciech Koszela na LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a><a class="social gh" href="https://github.com/wkoszela" target="_blank" rel="noopener" aria-label="wkoszela na GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a></span>
+  <span class="author">Materiały przygotował: <b>Wojciech Koszela</b>, prowadzący<a class="social li" href="https://www.linkedin.com/in/wkoszela/" target="_blank" rel="noopener" aria-label="Wojciech Koszela na LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a><a class="social gh" href="https://github.com/wkoszela" target="_blank" rel="noopener" aria-label="wkoszela na GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a><a class="social mail" href="mailto:wojciech.koszela@wroclaw.merito.pl" aria-label="E-mail do prowadzącego"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.2.5 7.8 6.1L19.8 6H4.2zM20 7.9l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9z"/></svg>wojciech.koszela@wroclaw.merito.pl</a></span>
   <span class="logo"><img src="assets/merito-logo.png" alt="Uniwersytet WSB Merito Wrocław"></span>
 </footer>
 </div>
