@@ -88,7 +88,7 @@
 </tbody>
 </table></div>
 <h2>LAB 03 · Relacje między tabelami</h2>
-<p>Ocena na podstawie przebiegu w GitHub Actions pokazanego prowadzącemu na koniec zajęć oraz pytań kontrolnych przy stanowisku (każda osoba odpowiada na jedno pytanie z jawnej listy). Instrukcja: <a href="lab03.html">LAB 03</a>.</p>
+<p>Warunek przystąpienia: skończone LAB 01 i LAB 02 (zielone reguły LAB 01 i LAB 02 z <code>&lt;lab&gt;2&lt;/lab&gt;</code>). Zadanie można oddać na zajęciach albo dokończyć w domu i oddać tagiem <code>lab-3</code> najpóźniej w niedzielę 22 listopada 2026 do godz. 23:59; ocena 3, 4 albo 5 wynika z etapów przebiegu w GitHub Actions dla tego tagu. Instrukcja: <a href="lab03.html">LAB 03</a>.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -98,24 +98,24 @@
 </thead>
 <tbody>
 <tr>
-<td>Relacje</td>
-<td>co najmniej 2 relacje <code>@ManyToOne</code> z <code>@JoinColumn(name = "…_id")</code>; jedna własna encja wskazuje na <code>UserAccount</code> (R3.01–R3.02)</td>
+<td>Ocena 3: minimum</td>
+<td>co najmniej 1 relacja <code>@ManyToOne</code> z <code>@JoinColumn(name = "…_id")</code>; aplikacja startuje, każda relacja ma w <code>data.sql</code> wiersz z wypełnionym kluczem obcym (R3.01–R3.02)</td>
 </tr>
 <tr>
-<td>Strona odwrotna</td>
-<td>opcjonalna; każde <code>@OneToMany</code> ma <code>mappedBy</code> (R3.03)</td>
+<td>Ocena 4: trzy rodzaje relacji</td>
+<td>co najmniej 2 × <code>@ManyToOne</code>, 1 × <code>@OneToMany</code> z <code>mappedBy</code> albo <code>@JoinColumn</code>, 1 × <code>@OneToOne</code> z <code>@JoinColumn</code> (R3.03–R3.05)</td>
 </tr>
 <tr>
-<td>Dane powiązane</td>
-<td>aplikacja startuje, każda relacja ma w <code>data.sql</code> wiersz z wypełnionym kluczem obcym; sekcje tabel nadrzędnych przed podrzędnymi (R3.04)</td>
+<td>Ocena 4: skończony schemat</td>
+<td>co najmniej 5 własnych tabel, każda połączona relacją, jedna encja wskazuje na <code>UserAccount</code>, relacja wiele-do-wielu (R3.06–R3.09)</td>
 </tr>
 <tr>
-<td>Pytania inwestora</td>
-<td>dwa zapytania z <code>join</code> sprawdzone w konsoli H2, zapisane jako komentarz w <code>data.sql</code> (bez reguły, pytanie kontrolne)</td>
+<td>Ocena 4: schemat widoczny</td>
+<td>plik <code>SCHEMAT.md</code> z diagramem ER, generowany przez reguły i zgodny z encjami (R3.10)</td>
 </tr>
 <tr>
-<td>Na ocenę 5</td>
-<td>encja łącząca wiele-do-wielu (R3.05), <code>fetch = LAZY</code> na każdym <code>@ManyToOne</code> i <code>@OneToOne</code> (R3.06), repozytorium w <code>&lt;moduł&gt;.repository</code> z zapytaniem przez relację i test (R3.07)</td>
+<td>Ocena 5</td>
+<td><code>fetch = LAZY</code> na każdym <code>@ManyToOne</code> i <code>@OneToOne</code> (R3.11), repozytorium w <code>&lt;moduł&gt;.repository</code> z zapytaniem przez relację (R3.12)</td>
 </tr>
 </tbody>
 </table></div>

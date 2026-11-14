@@ -40,8 +40,9 @@
 <h2>Jak działa sprawdzanie</h2>
 <ul>
 <li>Workflow <strong>Testy i reguły</strong> uruchamia się przy każdym pushu na <code>main</code>, każdym Pull Requeście i każdym tagu <code>lab-*</code>.
-  Ma dwa etapy: <strong>Ocena 4 · reguły obowiązkowe</strong> i <strong>Ocena 5 · warunki dodatkowe</strong> (testy z tagiem <code>ocena5</code>,
-  uruchamiane po zielonym etapie „Ocena 4”; czerwony etap „Ocena 5” nie oznacza całego przebiegu jako nieudanego).</li>
+  Ma etapy <strong>Ocena 4 · reguły obowiązkowe</strong> i <strong>Ocena 5 · warunki dodatkowe</strong> (testy z tagiem <code>ocena5</code>,
+  uruchamiane po zielonym etapie „Ocena 4”; czerwony etap „Ocena 5” nie oznacza całego przebiegu jako nieudanego).
+  Od LAB 03 jest też pierwszy etap <strong>Ocena 3 · reguły podstawowe</strong> (testy bez tagów <code>ocena4</code> i <code>ocena5</code>); dla LAB 01 i LAB 02 sprawdza on to samo co etap „Ocena 4”, więc ich ocenianie się nie zmienia.</li>
 <li><strong>Numer laboratorium bierze się z tagu:</strong> tag <code>lab-2</code> uruchamia reguły LAB 02, tag <code>lab-3-poprawa</code> reguły LAB 03.
   Przy pushu i PR obowiązuje <code>&lt;lab&gt;</code> z <code>pom.xml</code>.</li>
 <li>Przed testami workflow pobiera <strong>oficjalne reguły z szablonu</strong> i nadpisuje nimi <code>src/test/java/pl/wsb/rules</code>.
@@ -81,20 +82,19 @@ mvn verify -Dlab=N
 </tr>
 </thead>
 <tbody>
-<tr><td>0:00–0:12</td><td>teoria: B1 i B3 (klucz obcy po stronie „wiele”, przykład kawiarni z relacjami); B2 i B4 zespoły czytają w trakcie pracy</td></tr>
-<tr><td>0:12–0:17</td><td>Sync fork, <code>&lt;lab&gt;3&lt;/lab&gt;</code>, omówienie listy pytań kontrolnych (część A)</td></tr>
-<tr><td>0:17–1:20</td><td>praca zespołów (części D–G)</td></tr>
-<tr><td>0:40–1:15</td><td>obchód zespołów: pytania kontrolne przy stanowisku, każda osoba losuje jedno pytanie z listy w części A, ok. 3 minuty na zespół</td></tr>
-<tr><td>1:20–1:30</td><td>pokazanie przebiegu w GitHub Actions przy stanowisku; pozostałe zespoły po zajęciach z ostatniego przebiegu</td></tr>
+<tr><td>0:00–0:10</td><td>teoria: część A (trzy rodzaje relacji na przykładzie kawiarni), kryteria oceny i termin oddania</td></tr>
+<tr><td>0:10–0:15</td><td>sprawdzenie warunku przystąpienia (zielone LAB 01 i LAB 02); zespoły z zaległościami zaczynają od nich; Sync fork, <code>&lt;lab&gt;3&lt;/lab&gt;</code></td></tr>
+<tr><td>0:15–1:20</td><td>praca zespołów (części C–E), obchód stanowisk</td></tr>
+<tr><td>1:20–1:30</td><td>zespoły, które skończyły, pokazują przebieg w GitHub Actions; pozostałe kończą w domu i oddają tagiem <code>lab-3</code> do niedzieli 22 listopada 2026, godz. 23:59</td></tr>
 </tbody>
 </table></div>
-<p>Pytania kontrolne odpowiadają na obserwację z LAB 02: część zespołów pracuje z asystentami AI i ma poprawny kod bez zrozumienia,
-część bez AI i z trudem. Lista jest jawna, więc oba rodzaje zespołów mogą się przygotować; odpowiedź trzeba pokazać na własnym projekcie
-(kod, log, konsola H2). Osoba bez odpowiedzi dostaje ocenę o stopień niższą niż zespół. Pytanie 7 (encja łącząca zamiast <code>@ManyToMany</code>)
-losują tylko zespoły, które robią część G.</p>
+<p>LAB 03 oceniaj po terminie (niedziela 22 listopada 2026, godz. 23:59) z przebiegu dla tagu <code>lab-3</code> (albo ostatniego tagu <code>lab-3-…</code> wypchniętego w terminie): data przebiegu
+w zakładce <em>Actions</em> pokazuje, kiedy tag powstał. Zielony przebieg z <code>&lt;lab&gt;1&lt;/lab&gt;</code> albo
+<code>&lt;lab&gt;2&lt;/lab&gt;</code> nie sprawdza reguł LAB 03; tag wymusza właściwy numer laboratorium.
+Diagram schematu zespołu (<code>SCHEMAT.md</code>) jest w <em>Summary</em> przebiegu: sprawdź, czy odpowiada pomysłowi z wizytówki.</p>
 <h2>Ocena laboratorium (na koniec zajęć, ok. 5 min na zespół)</h2>
 <ol>
-<li>Zespół pokazuje przebieg <em>Testy i reguły</em> dla ostatniego commita na <code>main</code> (albo uruchomiony ręcznie <em>Run workflow</em> z numerem laboratorium, albo dla opcjonalnego tagu <code>lab-N</code>): zielony etap „Ocena 4” to warunek konieczny, zielony etap „Ocena 5” to warunek oceny 5.</li>
+<li>Zespół pokazuje przebieg <em>Testy i reguły</em> dla ostatniego commita na <code>main</code> (albo uruchomiony ręcznie <em>Run workflow</em> z numerem laboratorium, albo dla opcjonalnego tagu <code>lab-N</code>): zielony etap „Ocena 4” to warunek konieczny, zielony etap „Ocena 5” to warunek oceny 5. W LAB 03 ocenę wyznacza najwyższy zielony etap („Ocena 3”, „Ocena 4”, „Ocena 5”).</li>
 <li>Raport <em>Wkład członków zespołu</em>: czy każda osoba ma commity.</li>
 <li>Dowolna osoba z zespołu wyjaśnia wskazany fragment kodu: „co to robi?”, „dlaczego tak?”, „zmień X na Y”.</li>
 <li>Pytanie kontrolne z instrukcji laboratorium.</li>

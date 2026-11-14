@@ -3,9 +3,13 @@ package pl.wsb.rules.lab03;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import pl.wsb.rules.core.JpaModel;
 import pl.wsb.rules.core.SinceLab;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,13 +34,17 @@ class Lab03RulesSelfTest {
     }
 
     @Test
-    @DisplayName("Przykład kawiarni spełnia R3.01–R3.03 i warunki na ocenę 5 (R3.05–R3.07)")
+    @DisplayName("Przykład kawiarni spełnia reguły na ocenę 3, 4 i 5 (R3.01–R3.12 bez danych i pliku schematu)")
     void cafeSatisfiesRelationRules() {
         JpaModel cafe = model(CAFE);
         assertThatCode(() -> {
-            Lab03Checks.manyToOneWithJoinColumn(cafe);
-            Lab03Checks.someEntityReferencesUserAccount(cafe);
+            Lab03Checks.manyToOneWithJoinColumn(cafe, Lab03Checks.MIN_MANY_TO_ONE);
+            Lab03Checks.manyToOneWithJoinColumn(cafe, Lab03Checks.MIN_MANY_TO_ONE_GRADE_FOUR);
             Lab03Checks.oneToManyIsInverseSide(cafe);
+            Lab03Checks.oneToOneWithJoinColumn(cafe);
+            Lab03Checks.someEntityReferencesUserAccount(cafe);
+            Lab03Checks.enoughTables(cafe);
+            Lab03Checks.everyEntityIsRelated(cafe);
             Lab03Checks.toOneRelationsAreLazy(cafe);
             Lab03Checks.repositoryWithQueryThroughRelation(cafe);
         }).doesNotThrowAnyException();
@@ -60,14 +68,30 @@ class Lab03RulesSelfTest {
     @DisplayName("Celowo błędny model jest wskazywany z czytelnym komunikatem")
     void brokenModelIsRejected() {
         JpaModel broken = model(BROKEN);
-        assertThatThrownBy(() -> Lab03Checks.manyToOneWithJoinColumn(broken))
+        assertThatThrownBy(() -> Lab03Checks.manyToOneWithJoinColumn(broken, Lab03Checks.MIN_MANY_TO_ONE))
                 .hasMessageContaining("@JoinColumn").hasMessageContaining("Order.customer");
-        assertThatThrownBy(() -> Lab03Checks.manyToOneWithJoinColumn(model(NOTHING)))
-                .hasMessageContaining("co najmniej 2 relacji @ManyToOne");
+        assertThatThrownBy(() -> Lab03Checks.manyToOneWithJoinColumn(model(NOTHING), Lab03Checks.MIN_MANY_TO_ONE))
+                .hasMessageContaining("minimum relacji @ManyToOne we własnych encjach: 1");
+        assertThatThrownBy(() -> Lab03Checks.manyToOneWithJoinColumn(model(NOTHING), Lab03Checks.MIN_MANY_TO_ONE_GRADE_FOUR))
+                .hasMessageContaining("minimum relacji @ManyToOne we własnych encjach: 2");
         assertThatThrownBy(() -> Lab03Checks.someEntityReferencesUserAccount(broken))
                 .hasMessageContaining("UserAccount");
         assertThatThrownBy(() -> Lab03Checks.oneToManyIsInverseSide(broken))
-                .hasMessageContaining("mappedBy").hasMessageContaining("Order.lines");
+                .hasMessageContaining("mappedBy").hasMessageContaining("Order.lines")
+                .satisfies(e -> assertThat(e.getMessage()).doesNotContain("LoyaltyCard.rewardedLines"));
+        assertThat(SchemaDiagram.render(broken))
+                .contains("        Long loyalty_card_id FK")
+                .contains("    loyalty_card |o--o{ order_line : \"loyalty_card_id\"");
+        assertThatThrownBy(() -> Lab03Checks.oneToManyIsInverseSide(model(NOTHING)))
+                .hasMessageContaining("co najmniej jednej relacji @OneToMany");
+        assertThatThrownBy(() -> Lab03Checks.oneToOneWithJoinColumn(model(NOTHING)))
+                .hasMessageContaining("co najmniej jednej relacji @OneToOne");
+        assertThatThrownBy(() -> Lab03Checks.oneToOneWithJoinColumn(broken))
+                .hasMessageContaining("@JoinColumn").hasMessageContaining("LoyaltyCard.customer");
+        assertThatThrownBy(() -> Lab03Checks.enoughTables(model(NOTHING)))
+                .hasMessageContaining("co najmniej 5 własnych tabel");
+        assertThatThrownBy(() -> Lab03Checks.everyEntityIsRelated(broken))
+                .hasMessageContaining("bez żadnej relacji").hasMessageContaining("Coupon");
         assertThat(Lab03Checks.missingManyToMany(broken)).hasValueSatisfying(m -> assertThat(m).contains("wiele-do-wielu"));
         assertThatThrownBy(() -> Lab03Checks.toOneRelationsAreLazy(broken))
                 .hasMessageContaining("FetchType.LAZY").hasMessageContaining("Order.customer");
@@ -75,5 +99,43 @@ class Lab03RulesSelfTest {
                 .hasMessageContaining("<moduł>.repository").hasMessageContaining("OrderRepository");
         assertThatThrownBy(() -> Lab03Checks.repositoryWithQueryThroughRelation(model(NOTHING)))
                 .hasMessageContaining("Brak repozytorium");
+    }
+
+    @Test
+    @DisplayName("Schemat kawiarni: diagram Mermaid z tabelami, kluczami obcymi i relacjami")
+    void cafeSchemaDiagram() {
+        String diagram = SchemaDiagram.render(model(CAFE));
+        assertThat(diagram)
+                .contains("```mermaid\nerDiagram")
+                .contains("    reservation {\n        Long id PK\n")
+                .contains("        Long guest_id FK")
+                .contains("    cafe_table ||--o{ reservation : \"table_id\"")
+                .contains("    user_account |o--o| guest : \"user_account_id\"")
+                .contains("| reservation | Reservation | 7 | guest_id, table_id |")
+                .contains("1 × @OneToMany, 1 × @OneToOne");
+        assertThat(SchemaDiagram.render(model(CAFE))).isEqualTo(diagram);
+    }
+
+    @Test
+    @DisplayName("SCHEMAT.md: lokalnie zapisywany, w GitHub Actions porównywany z modelem")
+    void schemaFileLifecycle(@TempDir Path dir) throws IOException {
+        JpaModel cafe = model(CAFE);
+        Path file = dir.resolve(SchemaDiagram.FILE_NAME);
+        assertThatThrownBy(() -> Lab03Checks.schemaFileIsCurrent(cafe, file, true))
+                .hasMessageContaining("SCHEMAT.md").hasMessageContaining("nie istnieje");
+        assertThat(file).doesNotExist();
+
+        Lab03Checks.schemaFileIsCurrent(cafe, file, false);
+        assertThat(file).exists();
+        assertThatCode(() -> Lab03Checks.schemaFileIsCurrent(cafe, file, true)).doesNotThrowAnyException();
+
+        Files.writeString(file, Files.readString(file).replace("\n", "\r\n"));
+        assertThatCode(() -> Lab03Checks.schemaFileIsCurrent(cafe, file, true)).doesNotThrowAnyException();
+
+        Files.writeString(file, "# stary schemat\n");
+        assertThatThrownBy(() -> Lab03Checks.schemaFileIsCurrent(cafe, file, true))
+                .hasMessageContaining("nie zgadza się z encjami");
+        assertThatThrownBy(() -> Lab03Checks.schemaFileIsCurrent(model(NOTHING), file, false))
+                .hasMessageContaining("Brak własnych encji");
     }
 }

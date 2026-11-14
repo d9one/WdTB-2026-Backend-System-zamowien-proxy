@@ -21,34 +21,23 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Reguły LAB 03: relacje między encjami i dane powiązane. R3.01–R3.03 czytają pliki .class (ArchUnit),
- * R3.04 uruchamia aplikację na czystej bazie H2 i liczy wiersze z wypełnionym kluczem obcym.
- * Wiele-do-wielu, LAZY i repozytorium są warunkami na ocenę 5: {@link Lab03GradeFiveRulesTest}.
+ * Reguły LAB 03 na ocenę 3 (minimum): pierwsza relacja i dane powiązane. R3.01 czyta pliki .class (ArchUnit),
+ * R3.02 uruchamia aplikację na czystej bazie H2 i liczy wiersze z wypełnionym kluczem obcym.
+ * Trzy rodzaje relacji i skończony schemat to warunki na ocenę 4 ({@link Lab03GradeFourRulesTest}),
+ * LAZY i repozytorium na ocenę 5 ({@link Lab03GradeFiveRulesTest}).
  */
 @SinceLab(3)
-@DisplayName("LAB 03 · Relacje między tabelami")
+@DisplayName("LAB 03 · Pierwsza relacja (ocena 3)")
 class Lab03ProjectRulesTest {
 
     @Test
-    @DisplayName("R3.01 Co najmniej 2 relacje @ManyToOne we własnych encjach, każda z @JoinColumn(name = \"…_id\")")
+    @DisplayName("R3.01 Co najmniej 1 relacja @ManyToOne we własnych encjach, każda z @JoinColumn(name = \"…_id\")")
     void manyToOneWithJoinColumn() {
-        Lab03Checks.manyToOneWithJoinColumn(JpaModel.ofProject());
+        Lab03Checks.manyToOneWithJoinColumn(JpaModel.ofProject(), Lab03Checks.MIN_MANY_TO_ONE);
     }
 
     @Test
-    @DisplayName("R3.02 Co najmniej jedna własna encja wskazuje na konto użytkownika (UserAccount)")
-    void someEntityReferencesUserAccount() {
-        Lab03Checks.someEntityReferencesUserAccount(JpaModel.ofProject());
-    }
-
-    @Test
-    @DisplayName("R3.03 @OneToMany jest stroną odwrotną relacji: ma mappedBy")
-    void oneToManyIsInverseSide() {
-        Lab03Checks.oneToManyIsInverseSide(JpaModel.ofProject());
-    }
-
-    @Test
-    @DisplayName("R3.04 Dane powiązane: aplikacja startuje, a każda relacja @ManyToOne ma w data.sql wiersz z wypełnionym kluczem obcym")
+    @DisplayName("R3.02 Dane powiązane: aplikacja startuje, a każda relacja @ManyToOne i @OneToOne ma w data.sql wiersz z wypełnionym kluczem obcym")
     void everyRelationHasLinkedRows() {
         List<String> unlinked = new ArrayList<>();
         List<String> linked = new ArrayList<>();

@@ -51,17 +51,16 @@ opis pomysłu  JPA, data.sql   klucze obce       komponenty       DTO, walidacja
 <h2>LAB 03 · Relacje między tabelami</h2>
 <p>→ <a href="lab03.html">instrukcja LAB 03</a></p>
 <ul>
-<li><strong>pytania kontrolne przy stanowiskach</strong> (w trakcie pracy): każda osoba odpowiada na jedno pytanie z jawnej listy, pokazując odpowiedź w kodzie, logu albo konsoli H2</li>
-<li>wprowadzenie: klucz obcy po stronie „wiele”, <code>@ManyToOne</code> + <code>@JoinColumn</code>, strona odwrotna <code>@OneToMany(mappedBy)</code>, encja łącząca wiele-do-wielu, <code>LAZY</code></li>
-<li>zadanie: co najmniej 2 relacje <code>@ManyToOne</code> między tabelami z LAB 02, jedna do <code>UserAccount</code>; przewidywanie DDL przed uruchomieniem i porównanie z logiem</li>
-<li>dane powiązane: klucze obce w <code>data.sql</code>, kolejność sekcji, zaplanowana awaria (wiersz podrzędny przed nadrzędnym) i czytanie błędu <code>Referential integrity constraint violation</code></li>
-<li>pytania inwestora jako <code>select … join … group by</code> w konsoli H2</li>
-<li>na ocenę 5: encja łącząca wiele-do-wielu, <code>fetch = LAZY</code> na każdej relacji, repozytorium <code>JpaRepository</code> z zapytaniem pochodnym przez relację i test <code>@SpringBootTest</code></li>
-<li><strong>Reguły:</strong> R3.01–R3.04 (ocena 4), R3.05–R3.07 (ocena 5)</li>
+<li>warunek przystąpienia: skończone LAB 01 i LAB 02; zadanie można dokończyć w domu; oddanie tagiem <code>lab-3</code> najpóźniej w niedzielę 22 listopada 2026 do godz. 23:59</li>
+<li>wprowadzenie: klucz obcy, <code>@ManyToOne</code> + <code>@JoinColumn</code>, strona odwrotna <code>@OneToMany(mappedBy)</code>, <code>@OneToOne</code></li>
+<li>ocena 3 (minimum): co najmniej 1 relacja <code>@ManyToOne</code>, klucze obce w <code>data.sql</code>, aplikacja startuje</li>
+<li>ocena 4: trzy rodzaje relacji (2 × <code>@ManyToOne</code>, <code>@OneToMany</code>, <code>@OneToOne</code>) oraz skończony schemat: co najmniej 5 tabel, żadna bez relacji, relacja do <code>UserAccount</code>, wiele-do-wielu, plik <code>SCHEMAT.md</code> z diagramem ER</li>
+<li>ocena 5: <code>fetch = LAZY</code> na każdej relacji, repozytorium <code>JpaRepository</code> z zapytaniem pochodnym przez relację</li>
+<li><strong>Reguły:</strong> R3.01–R3.02 (ocena 3), R3.03–R3.10 (ocena 4), R3.11–R3.12 (ocena 5)</li>
 </ul>
 <h2>LAB 04 · Zapytania, serwisy i komponenty</h2>
 <ul>
-<li>Spring Data JPA: zapytania pochodne, <code>@Query</code> (JPQL), <code>GROUP BY</code>, projekcje, <code>Pageable</code>; pytania inwestora z LAB 03 jako metody repozytoriów z testami <code>@DataJpaTest</code></li>
+<li>Spring Data JPA: zapytania pochodne, <code>@Query</code> (JPQL), <code>GROUP BY</code>, projekcje, <code>Pageable</code>; pytania inwestora jako metody repozytoriów z testami <code>@DataJpaTest</code></li>
 <li>problem N+1: <code>@EntityGraph</code>, <code>JOIN FETCH</code></li>
 <li>kontener IoC: <code>@Component</code>, <code>@Service</code>, <code>@Configuration</code> + <code>@Bean</code>, wstrzykiwanie przez konstruktor, cykl życia i zasięg beana</li>
 <li>warstwa <code>application</code>: przypadki użycia, <code>@Transactional</code> (propagacja, <code>readOnly</code>, rollback)</li>

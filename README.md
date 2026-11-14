@@ -28,7 +28,7 @@ Te same strony znajdują się w katalogu [`docs/`](docs/index.html); po sklonowa
 |---|---|
 | LAB 01 | Start: projekt, aplikacja i opis pomysłu (bez oceny) |
 | LAB 02 | Encje JPA i dane startowe (ocena z pokazanego przebiegu w GitHub Actions) |
-| LAB 03 | Relacje między tabelami (ocena z przebiegu i pytań kontrolnych przy stanowisku) |
+| LAB 03 | Relacje między tabelami, skończony schemat bazy (można dokończyć w domu; oddanie tagiem `lab-3` do niedzieli 22 listopada 2026, godz. 23:59) |
 | LAB 04 | Zapytania, serwisy i komponenty |
 | LAB 05 | Kontrolery REST |
 | LAB 06 | Rozbudowa: zdarzenia, konfiguracja, zadania cykliczne |
@@ -94,7 +94,7 @@ Dane dopisane ręcznie w konsoli H2 znikają po restarcie; to, co ma zostać, do
 | testy i reguły dla laboratorium z `<lab>` w `pom.xml` | panel *Maven* (prawa krawędź okna) → *Lifecycle* → dwuklik na *verify* |
 
 Wynik jest w oknie *Run*: przy każdej regule zielony albo czerwony znak, a przy czerwonej opis, co poprawić.
-W GitHub Actions przebieg „Testy i reguły” ma dwa etapy: *Ocena 4 · reguły obowiązkowe* i *Ocena 5 · warunki dodatkowe*.
+W GitHub Actions przebieg „Testy i reguły” ma etapy *Ocena 4 · reguły obowiązkowe* i *Ocena 5 · warunki dodatkowe*, a od LAB 03 także pierwszy etap *Ocena 3 · reguły podstawowe*.
 
 ## Co zmodyfikować na LAB 01
 
@@ -135,20 +135,22 @@ Opcjonalnie zespół tworzy tag `lab-2` (okno *Git* → *Log* → prawy przycisk
 
 ## Co zmodyfikować na LAB 03
 
-Instrukcja krok po kroku: `docs/lab03.html`. Zespół pracuje razem **na jednym laptopie**; w trakcie pracy każda osoba
-odpowiada przy stanowisku na jedno pytanie kontrolne z listy w instrukcji (część A).
+Instrukcja krok po kroku: `docs/lab03.html`. Warunek przystąpienia: skończone LAB 01 i LAB 02
+(zielone reguły LAB 01 i LAB 02 z `<lab>2</lab>`).
 
 | Plik | Zmiana | Reguła |
 |---|---|---|
 | `pom.xml`, `<lab>` | `2` → `3` (od razu commit i push) | włącza R3.xx |
-| encje w `pl.wsb.<projekt>.<moduł>.entity` | co najmniej 2 pola `@ManyToOne` z `@JoinColumn(name = "…_id")`; jedno z nich typu `UserAccount` | R3.01–R3.02 |
-| strona odwrotna (opcjonalnie) | `@OneToMany(mappedBy = "…")` w encji nadrzędnej | R3.03 |
-| `src/main/resources/data.sql` | kolumny kluczy obcych w `insert`, sekcje tabel nadrzędnych przed podrzędnymi; komentarz z przewidywanym DDL i dwa pytania inwestora jako `select … join` | R3.04 |
-| na ocenę 5 | encja łącząca wiele-do-wielu, `fetch = FetchType.LAZY` na każdej relacji, interfejs `JpaRepository` w `<moduł>.repository` z metodą np. `findByGuest_FullName` i test `@SpringBootTest` | R3.05–R3.07 |
+| ocena 3 (minimum) | co najmniej 1 pole `@ManyToOne` z `@JoinColumn(name = "…_id")`; w `data.sql` kolumny kluczy obcych, sekcje tabel nadrzędnych przed podrzędnymi | R3.01–R3.02 |
+| ocena 4: trzy rodzaje relacji | co najmniej 2 pola `@ManyToOne`, 1 pole `@OneToMany` z `mappedBy` albo `@JoinColumn`, 1 pole `@OneToOne` z `@JoinColumn` | R3.03–R3.05 |
+| ocena 4: skończony schemat | co najmniej 5 własnych tabel, każda połączona relacją, jedna encja wskazuje na `UserAccount`, relacja wiele-do-wielu | R3.06–R3.09 |
+| ocena 4: `SCHEMAT.md` | plik z diagramem schematu, generowany przez *Maven → verify*, dodany do commita | R3.10 |
+| ocena 5 | `fetch = FetchType.LAZY` na każdej relacji, interfejs `JpaRepository` w `<moduł>.repository` z metodą np. `findByGuest_FullName` | R3.11–R3.12 |
 | `src/main/resources/static/index.html` | w liście zmian: co powstało na LAB 03 | — |
 
-Na koniec zajęć zespół pokazuje prowadzącemu przebieg „Testy i reguły” dla ostatniego commita na `main`
-(ręcznie: *Run workflow* → numer laboratorium `3`; opcjonalnie tag `lab-3`).
+Zadanie można oddać na zajęciach albo dokończyć w domu i oddać najpóźniej w niedzielę 22 listopada 2026 do godz. 23:59. Oddanie to tag `lab-3`
+(okno *Git* → *Log* → prawy przycisk na commicie → *New Tag…*, potem *Git → Push* z *Push Tags*); ocena wynika z przebiegu
+„Testy i reguły” dla tego tagu: zielony etap „Ocena 3” to 3, także „Ocena 4” to 4, wszystkie trzy to 5.
 
 ## Konwencja nazw
 

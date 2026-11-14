@@ -220,8 +220,8 @@
         <div class="badge">03</div>
         <div class="stop-body">
           <div class="stop-title"><h3>Relacje między tabelami</h3><span class="tagp ready">instrukcja</span></div>
-          <p>Tabele z LAB 02 łączą się kluczami obcymi: co najmniej dwie relacje <code>@ManyToOne</code>, z czego jedna do konta użytkownika, klucze obce w <code>data.sql</code>, zaplanowana awaria (wiersz podrzędny przed nadrzędnym) i pytania inwestora jako <code>join</code> w konsoli H2. Na ocenę 5 encja łącząca wiele-do-wielu, <code>LAZY</code> i pierwsze repozytorium z zapytaniem przez relację. W trakcie pracy każda osoba odpowiada przy stanowisku na jedno pytanie kontrolne z jawnej listy.</p>
-          <div class="tags"><span class="tag">@ManyToOne</span><span class="tag">@JoinColumn</span><span class="tag">mappedBy</span><span class="tag">foreign key</span><span class="tag">LAZY</span><span class="tag">JpaRepository</span></div>
+          <p>Schemat bazy projektu zostaje skończony: tabele z LAB 02 łączą się kluczami obcymi. Na ocenę 3 wystarcza jedna relacja <code>@ManyToOne</code> z danymi powiązanymi; na ocenę 4 trzy rodzaje relacji (<code>@ManyToOne</code>, <code>@OneToMany</code>, <code>@OneToOne</code>) i skończony schemat z relacją wiele-do-wielu oraz diagramem w pliku <code>SCHEMAT.md</code>; na ocenę 5 <code>LAZY</code> i pierwsze repozytorium z zapytaniem przez relację. Warunek przystąpienia: skończone LAB 01 i LAB 02. Zadanie można dokończyć w domu; oddanie tagiem <code>lab-3</code> najpóźniej w niedzielę 22 listopada 2026 do godz. 23:59.</p>
+          <div class="tags"><span class="tag">@ManyToOne</span><span class="tag">@OneToMany</span><span class="tag">@OneToOne</span><span class="tag">@JoinColumn</span><span class="tag">foreign key</span><span class="tag">JpaRepository</span></div>
           <a class="go" href="lab03.html">Otwórz instrukcję LAB 03 →</a>
         </div>
       </article>
