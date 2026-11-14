@@ -1,6 +1,9 @@
 package pl.wsb.systemzamowienproxy.offer.entity;
 
 import jakarta.persistence.*;
+import pl.wsb.systemzamowienproxy.customer.entity.Customer;
+import pl.wsb.systemzamowienproxy.order.entity.OrderRequest;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -44,4 +47,12 @@ public class DeliveryOffer {
     public Boolean getAccepted() { return accepted; }
     public String getSellerLocation() { return sellerLocation; }
     public String getNotes() { return notes; }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_request_id", nullable = false)
+    private OrderRequest orderRequest;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "courier_id", nullable = false)
+    private Customer courier;
 }
